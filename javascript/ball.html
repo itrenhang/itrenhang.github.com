@@ -1,0 +1,119 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style>
+*{margin:0; padding:0;}
+body{background:url(img/xingk.jpeg);}
+ul li{width:100px; height:100px; background:red; border-radius:50%; position:absolute; top:0; left:0; overflow:hidden;}
+ul li img{width:100%; height:100%;}
+</style>
+<script>
+function rnd(m,n){
+	return 	m+Math.random()*(n-m);
+}
+window.onload=function(){
+	var oUl=document.getElementsByTagName('ul')[0];
+	var aLi=oUl.getElementsByTagName('li');
+	var lastX=0;
+	var lastY=0;
+	var iSpeedX=0;
+	var iSpeedY=0;
+	var left=0;
+	var top=0;
+	var timer=null;
+	for(var i=0;i<aLi.length;i++){
+		aLi[i].style.top=parseInt(rnd(0,document.documentElement.clientHeight))+'px';
+		aLi[i].style.left=parseInt(rnd(0,document.documentElement.clientWidth))+'px';
+	}
+	for(var i=0;i<aLi.length;i++){
+		drag(aLi[i]);
+	}
+	function drag(obj){
+		obj.onmousedown=function(ev){
+			clearInterval(timer);
+			var oEvent=ev||event;
+			var disX=oEvent.clientX-obj.offsetLeft;
+			var disY=oEvent.clientY-obj.offsetTop;
+			document.onmousemove=function(ev){
+				var oEvent=ev||event;
+				obj.style.left=oEvent.clientX-disX+'px';
+				obj.style.top=oEvent.clientY-disY+'px';
+				iSpeedX=oEvent.clientX-lastX;
+				iSpeedY=oEvent.clientY-lastY;;
+				lastX=oEvent.clientX;
+				lastY=oEvent.clientY;
+			};
+			document.onmouseup=function(){
+				document.onmousemove=null;
+				document.onmouseup=null;
+				obj.releaseCapture&&obj.releaseCapture();	
+				move(obj)
+			};
+			obj.setCapture&&obj.setCapture();
+			return false;
+		};
+	}
+	function move(obj){
+		clearInterval(timer);
+		timer=setInterval(function(){
+			iSpeedY+=3;
+			top=obj.offsetTop+iSpeedY;
+			left=obj.offsetLeft+iSpeedX;
+			if(top<0){
+				top=0;
+				iSpeedY*=-0.8;	
+				iSpeedX*=0.8;	
+			}
+			if(top>document.documentElement.clientHeight-obj.offsetHeight){
+				top=document.documentElement.clientHeight-obj.offsetHeight;
+				iSpeedY*=-0.8;	
+				iSpeedX*=0.8;	
+			}
+			if(left<0){
+				left=0;
+				iSpeedX*=-0.8;	
+				iSpeedY*=0.8;	
+			}
+			if(left>document.documentElement.clientWidth-obj.offsetWidth){
+				left=document.documentElement.clientWidth-obj.offsetWidth;
+				iSpeedX*=-0.8;	
+				iSpeedY*=0.8;	
+			}
+			obj.style.left=left+'px';
+			obj.style.top=top+'px';
+			if(Math.abs(iSpeedX)<1)iSpeedX=0;
+			if(Math.abs(iSpeedY)<1)iSpeedY=0;
+			if(iSpeedX==0&&iSpeedY==0&&t==document.documentElement.clientHeight-obj.offsetHeight){
+				clearInterval(timer);	
+			}
+		},30)
+	}
+};
+</script>
+</head>
+
+<body>
+	<ul id="ul1">
+		<li>
+			<img src="img/diqiu.png" />
+		</li>
+		<li>
+			<img src="img/muxing.png" />
+		</li>
+		<li>
+			<img src="img/shuixing.png" />
+		</li>
+		<li>
+			<img src="img/jinxing.png" />
+		</li>
+		<li>
+			<img src="img/huoxing.png" />
+		</li>
+		<li>
+			<img src="img/tianwangxing.png" />
+		</li>
+	</ul>
+</body>
+</html>

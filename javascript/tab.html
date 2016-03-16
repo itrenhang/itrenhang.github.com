@@ -1,0 +1,120 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style>
+*{margin:0; padding:0; list-style:none;}
+#box{width:500px;height:300px; position:relative; margin:100px auto; overflow:hidden; }
+#box ul{height:300px; position:absolute; top:0; left:0;}
+#box ul li{width:500px;height:300px; float:left;}
+#box ul li img{width:100%; height:100%;}
+#box ol{ width:200px; height:30px; position:absolute; left:50%; bottom:20px; margin-left:-100px;}
+#box ol li{ width:30px; height:30px; margin-left:10px; float:left; background:#ccc; border-radius:50%;}
+#box a{ position:absolute; top:50%; margin-top:-20px; width:40px; height:40px; background:rgba(0,0,0,0.5); color:#fff; text-align:center; line-height:40px; display:none;}
+#prev{left:0;}
+#next{right:0;}
+#box a:hover{background:rgba(255,0,0,0.5);}
+#box ol li.on{background:#F00;}
+</style>
+<script>
+window.onload=function(){
+	var oBox=document.getElementById('box');
+	var oUl=oBox.children[0];
+	var aLi=oUl.children;
+	var oOl=oBox.children[1];
+	var aBtn=oOl.children;
+	oUl.innerHTML+=oUl.innerHTML;
+	oUl.style.width=aLi.length*aLi[0].offsetWidth+'px';
+	var w=oUl.offsetWidth/2;
+	var oPrev=document.getElementById('prev');
+	var oNext=document.getElementById('next');
+	var iNow=0;
+	oBox.onmouseover=function(){
+		oPrev.style.display='block';	
+		oNext.style.display='block';	
+	};
+	oBox.onmouseout=function(){
+		oPrev.style.display='none';	
+		oNext.style.display='none';	
+	};
+	function tab(){
+		for(var i=0;i<aBtn.length;i++){
+			aBtn[i].className='';	
+		}
+		if(iNow>0){
+			aBtn[iNow%aBtn.length].className='on';
+		}else{
+			aBtn[(iNow%aBtn.length+aBtn.length)%aBtn.length].className='on';
+		}
+		move(oUl,-iNow*aLi[0].offsetWidth)
+	}
+	for(var i=0;i<aBtn.length;i++){
+		(function(index){
+			aBtn[i].onclick=function(){
+				
+				if((iNow%aBtn.length==4||iNow%aBtn.length==-1)&&index==0){
+					iNow++;	
+				}
+				if(iNow%aBtn.length==0&&index==4){
+					iNow--;	
+				}
+				iNow=Math.floor(iNow/aBtn.length)*aBtn.length+index;
+				tab();
+			};	
+		})(i);
+	}
+	
+	oPrev.onclick=function(){
+		iNow--;
+		tab();
+	};
+	oNext.onclick=function(){
+		iNow++;
+		tab();
+	};
+	var cur=0;
+	function move(obj,iTarget){
+		var start=cur;
+		var dis=iTarget-start;
+		var count=Math.floor(1000/30);
+		var n=0;
+		clearInterval(obj.timer);
+		obj.timer=setInterval(function(){
+			n++;
+			cur=start+dis*n/count
+			if(cur<0){
+				obj.style.left=cur%w+'px';
+			}else{
+				obj.style.left=(cur%w-w)%w+'px';
+			}
+			if(n==count){
+				clearInterval(obj.timer);	
+			}	
+		},30);	
+	}
+};
+</script>
+</head>
+
+<body>
+	<div id="box">
+		<ul>
+			<li><img src="images/0.jpg" /></li>
+			<li><img src="images/1.jpg" /></li>
+			<li><img src="images/2.jpg" /></li>
+			<li><img src="images/3.jpg" /></li>
+			<li><img src="images/4.jpg" /></li>
+		</ul>
+		<ol>
+			<li class="on"></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+		</ol>
+		<a href="javascript:;" id="prev">prev</a>
+		<a href="javascript:;" id="next">next</a>
+	</div>
+</body>
+</html>

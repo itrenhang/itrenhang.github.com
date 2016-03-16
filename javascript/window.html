@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>百叶窗</title>
+    <style>
+        *{margin:0; padding:0;}
+        input{width:60px; height:30px; background:#e16211; font-weight:bold; font-size:16px; position:absolute; margin-left:-40px; left:50%; top:0;}
+        #box{width:700px; height:400px; margin:100px auto; position:relative; top:0; left:0; overflow:hidden; background:url(../img/0.jpg) no-repeat;}
+        #box span{position:absolute; background:url(../img/0.jpg) no-repeat;}
+    </style>
+    <script src="../js/move.js"></script>
+    <script>
+        window.onload=function(){
+            var oBox=document.getElementById('box');
+            var oBtn=document.getElementById('btn');
+            var C=7;
+            var R=4;
+            var arr=[];
+            var bOk=false;
+            for(var i=0;i<R;i++){
+                for(var j=0;j<C;j++){
+                    var oS=document.createElement('span');
+                    var w=oBox.offsetWidth/C;
+                    var h=oBox.offsetHeight/R;
+                    oS.style.width=w+'px';
+                    oS.style.height=h+'px';
+                    oS.style.left=j*w+'px';
+                    oS.style.top=i*h+'px';
+                    oS.style.backgroundPosition=-j*w+'px '+-i*h+'px';
+                    oBox.appendChild(oS);
+                }
+            }
+            var aSpan=oBox.children;
+            var timer=null;
+            var iNow=0;
+            oBtn.onclick=function(){
+                if(bOk)return;
+                bOk=true;
+                iNow++;
+                for(var i=0;i<aSpan.length;i++){
+                    (function(index){
+                        timer = setTimeout(function(){
+                            arr.push(aSpan[index]);
+                            aSpan[index].style.backgroundImage='url(../img/'+iNow%3+'.jpg)';
+                            aSpan[index].style.opacity=0;
+                            move(aSpan[index],{opacity:1});
+
+                            if(arr.length==aSpan.length){
+                                    bOk=false;
+                                    arr=[];
+                            }
+                        },500*Math.random()+100);
+                    })(i);
+                }
+            };
+        };
+    </script>
+</head>
+<body>
+    <input type="button" class="btn" id="btn" value="点击">
+    <div id="box">
+    </div>
+
+</body>
+</html>

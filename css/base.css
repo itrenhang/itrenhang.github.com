@@ -1,0 +1,16 @@
+@charset "utf-8";
+/* CSS Document */
+*{margin:0;padding:0;}
+
+body{ font-size:12px; margin:0; font-family:'Microsoft Yahei';}
+h1,h2,h3,h4,h5,h6{ margin:0; font-weight:normal; font-size:12px;}
+a{ color:#000; text-decoration:none;}
+p{ margin:0;}
+i,em{ font-style:normal;}
+b,strong{ font-weight:normal;}
+a img{ border:none;}
+ol,ul,dl{list-style:none;}
+.p10{ padding:0 10px;}
+
+.clearfix:after{display:block;content:"";clear:both;}
+.clearfix{zoom:1;}

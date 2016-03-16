@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>手风琴</title>
+<style>
+*{margin:0; padding:0;}
+#box{width:760px;  height:400px; margin:100px auto; overflow:hidden;}
+#box div{position:relative; top:0; left:0;}
+#box a{position:absolute; top:0; left:0; width:600px; height:400px; text-decoration:none; transition:1s left ease-out;}
+#box span{position:absolute; top:0; left:0; width:40px; height:400px; color:#fff; text-align:center; font-size:30px; background:rgba(210,210,210,0.5)}
+#box img{display:block; width:600px; height:400px; background:#999;}
+</style>
+<script>
+window.onload=function(){
+	var oBox=document.getElementById('box');
+	var aA=oBox.getElementsByTagName('a');
+
+	for(var i=0;i<aA.length;i++){
+		aA[i].style.left=i*40+'px';
+		(function(index){
+			aA[i].onmouseover=function(){
+				for(var j=0;j<aA.length;j++){
+					if(index>=j){
+						aA[j].style.left=j*40+'px';
+					}else{
+						aA[j].style.left=560+j*40+'px';
+					}
+				}
+			};
+		})(i)
+	}
+};
+</script>
+</head>
+
+<body>
+	<div id="box">
+        <div>
+            <a href="javascript:;">
+                <span>这是第一层</span>
+                <img src="../img/wenzi1.jpg" alt="1">
+            </a>
+            <a href="javascript:;">
+                <span>这是第二层</span>
+                <img src="../img/wenzi2.jpg" alt="2">
+            </a>
+            <a href="javascript:;">
+                <span>这是第三层</span>
+                <img src="../img/wenzi3.jpg" alt="3">
+            </a>
+            <a href="javascript:;">
+                <span>这是第四层</span>
+                <img src="../img/wenzi4.jpg" alt="4">
+            </a>
+            <a href="javascript:;" >
+                <span>这是第五层</span>
+                <img src="../img/wenzi5.jpg" alt="4">
+            </a>
+        </div>
+      </div>
+</body>
+</html>

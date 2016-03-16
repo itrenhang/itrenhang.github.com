@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>拖拽</title>
+<style>
+*{margin:0; padding:0; list-style:none;}
+#box{width:800px; height:400px; margin:50px auto; position:relative; top:0; left:0; border:1px solid red; overflow:hidden;}
+ul{ position:absolute; left:0; top:50%; margin-top:-100px;}
+li{float:left;width:300px; height:200px; position:relative; top:0; left:0; padding:0 10px;}
+li img{ width:300px; height:200px; display:block; position:absolute; top:0; left:0;}
+</style>
+<script>
+window.onload=function(){
+    var oBox = document.getElementById('box');
+    var oUl = oBox.children[0];
+    var aLi = oUl.children;
+    var aImg = oUl.getElementsByTagName('img');
+    oUl.style.width=aLi.length*aLi[0].offsetWidth+'px';
+
+    //接下来这段代码跟程序无关，只是测试用的。
+    for(var i=0;i<aLi.length;i++){
+        var oSpan = document.createElement('span');
+        oSpan.innerHTML=i;
+        aLi[i].appendChild(oSpan);
+    }
+    var aSpan = oUl.getElementsByTagName('span');
+    var divC=oBox.offsetWidth/2;
+    oUl.onmousedown=function(ev){
+        var oEvent = ev||event;
+        var disX = oEvent.clientX-oUl.offsetLeft;
+        document.onmousemove=function(ev){
+            var oEvent = ev||event;
+            var left = oEvent.clientX-disX;
+            if(left>divC-(1-0.5)*aLi[0].offsetWidth){
+                left=divC-(1-0.5)*aLi[0].offsetWidth;
+            }else if(left<divC-(aLi.length-0.5)*aLi[0].offsetWidth){
+                left=divC-(aLi.length-0.5)*aLi[0].offsetWidth;
+            }
+            oUl.style.left=left+'px';
+            //改变img的大小
+            setSize();
+        };
+        document.onmouseup=function(){
+            document.onmousemove=null;
+            document.onmouseup=null;
+            oUl.releaseCapture&&oUl.releaseCapture();
+        };
+        oUl.setCapture&&oUl.setCapture();
+        return false;
+    };
+    oUl.style.left=divC-(2-0.5)*aLi[0].offsetWidth+'px';
+    setSize();
+    function setSize(){
+        for(var i=0;i<aImg.length;i++){
+            var l = Math.abs(divC-(aLi[i].offsetWidth/2+aLi[i].offsetLeft+oUl.offsetLeft));
+            var scale = 1-l/500;
+            scale<0.5&&(scale=0.5);
+            aSpan[i].innerHTML=scale;
+            aImg[i].style.width=scale*600+'px';
+            aImg[i].style.height=scale*400+'px';
+            aImg[i].style.marginTop=-(aImg[i].offsetHeight-200)/2+'px';
+            aImg[i].style.marginLeft=-(aImg[i].offsetWidth-300)/2+'px';
+            aImg[i].style.zIndex=scale*10000;
+        }
+    }
+};
+</script>
+
+</head>
+<body>
+<div id="box">
+    <ul>
+        <li><img src="../img/wenzi1.jpg"/></li>
+        <li><img src="../img/wenzi2.jpg" /></li>
+        <li><img src="../img/wenzi3.jpg" /></li>
+        <li><img src="../img/wenzi4.jpg" /></li>
+        <li><img src="../img/wenzi5.jpg" /></li>
+    </ul>
+</div>
+</body>
+</html>

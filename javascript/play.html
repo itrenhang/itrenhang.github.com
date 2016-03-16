@@ -1,0 +1,149 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style>
+*{margin:0;padding:0;}
+#div1{width:20px;height:20px; background:#000; border-radius:50%; position:absolute; top:0;left:0;}
+#div2{width:100px;height:20px;position:absolute;bottom:0; left:0; background:#996;}
+#btn1{width:100px;height:40px; background:#ccc; color:red; text-align:center; line-height:40px; font-size:20px; position:absolute; top:50%;left:50%; margin-top:-20px;margin-left:-50px;}
+#btn2{width:100px;height:40px; background:#ccc; color:red; text-align:center; line-height:40px; font-size:20px; position:absolute; top:50%;left:50%; margin-top:-20px;margin-left:-50px; display:none;}
+#box{width:400px;height:200px;position:absolute; top:50%;left:50%;margin-top:-100px;margin-left:-200px;}
+#val{position:absolute; top:126px;left:153px;}
+#txt{width:30px;height:16px; text-align:center;}
+#m,#p{width:20px;}
+#val p{line-height:20px; font-size:20px; text-align:center;}
+</style>
+<script>
+window.onload=function(){
+	var oDiv1=document.getElementById('div1');
+	var oDiv2=document.getElementById('div2');
+	var oBtn1=document.getElementById('btn1');
+	var oBtn2=document.getElementById('btn2');
+	var oM=document.getElementById('m');
+	var oP=document.getElementById('p');
+	var oTxt=document.getElementById('txt');
+	var oBox=document.getElementById('box');
+	var sW=document.documentElement.clientWidth;
+	var sH=document.documentElement.clientHeight;
+	var timer=null;
+	function rnd(m,n){
+		return parseInt(Math.random()*(n-m)+m);
+	}
+	function move(s){
+		var x=rnd(0,1200);
+		var y=0;
+		var m=0;
+		var n=0;
+		var f=0;
+		var num=0;
+		clearInterval(timer);
+		timer=setInterval(function(){
+			var t1=oDiv1.offsetTop;
+			var l1=oDiv1.offsetLeft;
+			var b1=oDiv1.offsetTop+oDiv1.offsetHeight;
+			var r1=oDiv1.offsetLeft+oDiv1.offsetWidth;
+			
+			var t2=oDiv2.offsetTop;
+			var l2=oDiv2.offsetLeft;
+			var b2=oDiv2.offsetTop+oDiv2.offsetHeight;
+			var r2=oDiv2.offsetLeft+oDiv2.offsetWidth;
+			
+			if(b1<t2||r1<l2||l1>r2||t1>b2){
+				num=0;
+			}else{
+				num=1;
+				f+=10;
+			}
+			
+			if(x>=sW-oDiv1.offsetWidth){
+				n=1;
+			}else if(x<=0){
+				n=0;
+			}
+			if(n==1){
+				x-=s;	
+			}else{
+				x+=s;	
+			}
+			if(y>sH-oDiv1.offsetHeight){
+				alert('游戏结束');
+				alert('得分'+f)
+				oBtn2.style.display='block';
+				clearInterval(timer);
+			}else if(y<=0){
+				m=0;
+			}else if(num==1){
+				m=1;
+			}
+			//alert(s)
+			if(m==1){
+				y-=s;
+			}else{
+				y+=s;	
+			}
+			oDiv1.style.left=x+'px';	
+			oDiv1.style.top=y+'px';	
+		},1);
+	}
+	document.onmousemove=function(ev){
+		var oEvent=ev||event;
+		var l=oEvent.clientX;
+		if(l>sW-oDiv2.offsetWidth){
+			l=sW-oDiv2.offsetWidth;
+		}
+		oDiv2.style.left=l+'px';
+	};
+	var v=1;
+	oP.onclick=function(){
+		v++;
+		if(v>5){
+			v=5;	
+		}
+		oTxt.value=v;
+	};
+	oM.onclick=function(){
+		v--;
+		if(v<1){
+			v=1;
+		}
+		oTxt.value=v;
+	};
+	
+	oBtn1.onclick=function(){
+		var s=parseInt(oTxt.value);
+		if(s>5){
+			s=5;	
+		}else if(s<1){
+			s=1;
+		}
+		//alert(s)
+		move(s);
+		oBox.style.display='none';
+	}
+	oBtn2.onclick=function(){
+		oBox.style.display='block';
+		oBtn2.style.display='none';
+	}
+	
+	
+};
+</script>
+</head>
+
+<body>
+	<div id="box">
+		<div id="btn1">开始游戏</div>
+		<div id="val">
+			<input type="button" value="-" id="m">
+			<input type="text"  id="txt" value="1">
+			<input type="button" value="+" id="p">
+			<p>1-5</p>
+		</div>
+	</div>
+	<div id="div1"></div>
+	<div id="div2"></div>
+	<div id="btn2">重来</div>
+</body>
+</html>
