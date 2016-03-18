@@ -54,14 +54,6 @@ window.onload=function ()
 		oNewDiv.style.backgroundSize='100% 100%';
 		
 		oDiv.appendChild(oNewDiv.parentNode);
-		(function (){
-			var oS=document.createElement('script');
-			
-			oS.type='text/javascript';
-			oS.src='http://www.zhinengshe.com/zpi/zns_demo.php?id=3540';
-			
-			document.body.appendChild(oS);
-		})();
 	}
 	
 	document.onmousedown=function (ev)
