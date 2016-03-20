@@ -1,1 +1,39 @@
-"use strict";function MoveH(a,b){var c=0,d=0,e=null;clearInterval(e),e=setInterval(function(){c+=3,d=a.offsetHeight+c,d>b&&(d=b,c*=-.5),a.style.height=d+"px",Math.abs(c)<1&&(c=0),0==c&&d==b&&clearInterval(e)},30)}
+  function MoveH(obj,iTarget){
+
+        obj.iSpeed = 0;
+        obj.iNow = 0;
+        var num = 4;
+        clearInterval(obj.timer);
+        obj.timer = setInterval(function(){
+
+            if( obj.offsetHeight < iTarget ){
+                num = 4;
+            }
+            else if(obj.offsetHeight > iTarget){
+                num = -4;
+            }
+
+            obj.iSpeed += num;
+
+            var H = obj.offsetHeight + obj.iSpeed;
+
+            if( (H > iTarget && num > 0) || (H < iTarget && num < 0) ){
+
+                obj.iNow++;
+
+                H = iTarget;
+                obj.iSpeed *= -0.55;
+
+                if(obj.iNow==2){
+                        clearInterval(obj.timer);
+                    }
+                }
+                else{
+
+                    obj.iNow = 0;
+                }
+
+            obj.style.height = H + 'px';
+
+        },30);
+        };
