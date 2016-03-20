@@ -1,0 +1,182 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style>
+*{margin:0; padding:0;}
+html,body{overflow:hidden;}
+.img{width:700px; height:400px; position:absolute; top:50%; left:50%; margin-top:-200px; margin-left:-350px; background:url(img/1.jpg) no-repeat; _perspective:800px; -webkit-transform:perspective(800px); }
+.btn{position:absolute; top:50px; left:0; padding-left:480px; }
+a{ text-decoration:none; color:#fff;width:100px; height:40px; text-align:center; line-height:40px; font-size:20px; font-weight:bold; display:inline-block; box-shadow:0 4px 4px #000; margin-right:20px;}
+a:active{-webkit-transform:translate(0px,4px);box-shadow:0 0px 4px #000;}
+.bom{ background:#F03; }
+.flip{ background:#0F0; }
+.page{ background:#03C; }
+</style>
+<script>
+function rnd(n,m){
+	return Math.floor(n+Math.random()*(m-n));	
+}
+document.addEventListener('DOMContentLoaded',function(){
+	var oDiv=document.querySelector('.img');	
+	var oA=document.querySelectorAll('.btn a')[0];	
+	var oA2=document.querySelectorAll('.btn a')[1];	
+	var oA3=document.querySelectorAll('.btn a')[2];	
+	var iNow=0;
+	var bOk=false;
+	oA.onclick=function(){
+		if(bOk)return;
+		bOk=true;
+		oDiv.style.background='url(img/'+((iNow+1)%3+1)+'.jpg) no-repeat';
+		var r=4;
+		var c=7;
+		for(var i=0;i<r;i++){
+			for(var j=0;j<c;j++){
+				var oS=document.createElement('span');
+				oS.style.width=(oDiv.offsetWidth/c)+'px';
+				oS.style.height=(oDiv.offsetHeight/r)+'px';
+				oS.style.WebkitTransition='1s all ease';
+				oS.style.WebkitTransform='perspective(800px)';
+				oS.style.background='url(img/'+(iNow%3+1)+'.jpg) '+-j*(oDiv.offsetWidth/c)+'px '+-i*(oDiv.offsetHeight/r)+'px';
+				oS.style.position='absolute';
+				oDiv.appendChild(oS);
+				oS.style.top=i*(oDiv.offsetHeight/r)+'px';
+				oS.style.left=j*(oDiv.offsetWidth/c)+'px';
+			}
+		}
+		var aS=document.querySelectorAll('.img span');
+		for(var i=0;i<aS.length;i++){
+			
+			aS[i].style.WebkitTransform='perspective(800px) translate('+(aS[i].offsetWidth/2+aS[i].offsetLeft-oDiv.offsetWidth/2)+'px,'+(aS[i].offsetHeight/2+aS[i].offsetTop-oDiv.offsetHeight/2)+'px) rotateX('+rnd(40,190)+'deg) rotateY('+rnd(40,190)+'deg)';
+			aS[i].style.opacity='0';
+			
+		}
+		aS[aS.length-1].addEventListener('transitionend',function(){
+			for(var i=0;i<aS.length;i++){
+				oS.style.WebkitTransition='none';
+			}
+			oDiv.innerHTML='';
+			bOk=false;
+		},false);
+	iNow++;
+	};
+	
+	oA2.onclick=function(){
+		if(bOk)return;
+		bOk=true;
+		oDiv.innerHTML='';
+		oDiv.style.background='url(img/'+((iNow+1)%3+1)+'.jpg) no-repeat';
+		var r=4;
+		var c=7;
+		for(var i=0;i<r;i++){
+			for(var j=0;j<c;j++){
+				var oS=document.createElement('span');
+				oS.style.width=(oDiv.offsetWidth/c)+'px';
+				oS.style.height=(oDiv.offsetHeight/r)+'px';
+				oS.style.WebkitTransition='1s all ease';
+				oS.style.WebkitTransformStyle='preserve-3d';
+				oS.style.WebkitTransform='perspective(800px)';
+				//oS.style.background='url(img/'+(iNow%3+1)+'.jpg) '+-j*(oDiv.offsetWidth/c)+'px '+-i*(oDiv.offsetHeight/r)+'px';
+				oS.style.position='absolute';
+				oDiv.appendChild(oS);
+				oS.style.top=i*(oDiv.offsetHeight/r)+'px';
+				oS.style.left=j*(oDiv.offsetWidth/c)+'px';
+				var oI=document.createElement('i');
+				var oEm=document.createElement('em');
+				oI.style.position='absolute';
+				oI.style.width=(oDiv.offsetWidth/c)+'px';
+				oI.style.height=(oDiv.offsetHeight/r)+'px';
+				oI.style.background='url(img/'+(iNow%3+1)+'.jpg) '+-j*(oDiv.offsetWidth/c)+'px '+-i*(oDiv.offsetHeight/r)+'px';
+				oEm.style.position='absolute';
+				oEm.style.width=(oDiv.offsetWidth/c)+'px';
+				oEm.style.height=(oDiv.offsetHeight/r)+'px';
+				oEm.style.background='url(img/'+((iNow+1)%3+1)+'.jpg) '+-j*(oDiv.offsetWidth/c)+'px '+-i*(oDiv.offsetHeight/r)+'px';
+				oS.appendChild(oI);
+				oS.appendChild(oEm);
+				oI.style.WebkitTransform='translateZ(1px)';
+				oEm.style.WebkitTransform='translateZ(-1px) scale(-1,1)';
+				oS.r=i;
+				oS.c=j
+			}
+		}
+		var aS=document.querySelectorAll('.img span');
+		for(var i=0;i<aS.length;i++){
+			(function(i){
+				setTimeout(function(){
+					aS[i].style.WebkitTransform='perspective(800px) rotateY(180deg)';
+				},(aS[i].r+aS[i].c)*100);	
+			})(i);
+		}
+		aS[aS.length-1].addEventListener('transitionend',function(){
+			for(var i=0;i<aS.length;i++){
+				oS.style.WebkitTransition='none';
+			}
+			oDiv.innerHTML='';
+			bOk=false;
+		},false);
+		
+		iNow++;
+	};
+	
+	oA3.onclick=function(){
+		if(bOk)return;
+		bOk=true;
+		var n=2;
+		oDiv.innerHTML='';
+		oDiv.style.background='url(img/'+((iNow+1)%3+1)+'.jpg)';
+		for(var i=0;i<n;i++){
+			var oS=document.createElement('span');
+			oS.style.position='absolute';
+			oS.style.width=oDiv.offsetWidth/n+'px';
+			oS.style.height=oDiv.offsetHeight+'px';
+			oS.style.WebkitTransformStyle='preserve-3d';
+			oS.style.WebkitTransition='1s all ease';
+			oS.style.WebkitTransformOrigin='left'
+			oS.style.WebkitTransform='perspective(800px) rotateY(0deg)';
+			oS.style.top='0px';
+			oS.style.left=i*oDiv.offsetWidth/n+'px';
+			oDiv.appendChild(oS);
+			// 正反页
+			var oI=document.createElement('i');
+			var oEm=document.createElement('em');
+			oI.style.position='absolute';
+			oI.style.width=oDiv.offsetWidth/n+'px';
+			oI.style.height=oDiv.offsetHeight+'px';
+			oI.style.top='0px';
+			oI.style.left='0px';
+			oI.style.background='url(img/'+(iNow%3+1)+'.jpg) '+i*oDiv.offsetWidth/n+'px 0px';
+			
+			oEm.style.position='absolute';
+			oEm.style.width=oDiv.offsetWidth/n+'px';
+			oEm.style.height=oDiv.offsetHeight+'px';
+			oEm.style.top='0px';
+			oEm.style.left='0px';
+			oEm.style.background='url(img/'+((iNow+1)%3+1)+'.jpg) 0px 0px';
+			oS.appendChild(oI);
+			oS.appendChild(oEm);
+			oI.style.WebkitTransform='translateZ(1px)';
+			oEm.style.WebkitTransform='translateZ(-1px) scale(-1,1)';
+		}
+		var oS=document.querySelectorAll('.img span')[1];
+		oS.style.WebkitTransform='perspective(800px) rotateY(-180deg)';
+		oS.addEventListener('transitionend',function(){
+			oDiv.innerHTML='';
+			bOk=false;
+		},false);
+		iNow++;
+	};
+	
+},false);
+</script>
+</head>
+
+<body>
+	<div class="img"></div>
+	<div class="btn">
+		<a href="javascript:;" class="bom">爆炸</a>
+		<a href="javascript:;" class="flip">翻转</a>
+		<a href="javascript:;" class="page">翻页</a>
+	</div>
+</body>
+</html>
