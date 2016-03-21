@@ -83,10 +83,10 @@ window.onload=function(){
 	
 	//con2
 	;(function(){
-		var oPrev=document.querySelector('.con2 .con2_prev');	
-		var oNext=document.querySelector('.con2 .con2_next');	
-		var oBox=document.querySelector('.con2 .ul_box');	
-		var aLi=document.querySelectorAll('.con2 .ul_box li');
+		var oPrev=document.querySelector('.add .con2_prev');	
+		var oNext=document.querySelector('.add .con2_next');	
+		var oBox=document.querySelector('.add .ul_box');	
+		var aLi=document.querySelectorAll('.add .ul_box li');
 		var result=[];
 		for(var i=0;i<aLi.length;i++){
 			result.push(aLi[i].className);
