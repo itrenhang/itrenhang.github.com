@@ -21,8 +21,6 @@ window.onload=function(){
 				move(aImg[i],{opacity:0},{type:'linear'});	
 			}
 			move(aImg[n],{opacity:1},{type:'linear',time:900});
-			
-			
 		},10000);
 	})();
 	//con1
@@ -80,31 +78,72 @@ window.onload=function(){
 			oDiv.addEventListener('transitionend',fnEnd,false);
 		};
 	})();
-	
-	//con2
+	//-webkit-函数
+	function setCSS3(obj,name,value){
+		obj.style['Webkit'+name.charAt(0).toUpperCase()+name.substring(1)] = value;
+		obj.style['Moz'+name.charAt(0).toUpperCase()+name.substring(1)] = value;
+		obj.style['ms'+name.charAt(0).toUpperCase()+name.substring(1)] = value;
+		obj.style['O'+name.charAt(0).toUpperCase()+name.substring(1)] = value;
+		obj.style[name] = value;
+	}	
+	//add
 	;(function(){
-		var oPrev=document.querySelector('.add .con2_prev');	
-		var oNext=document.querySelector('.add .con2_next');	
+		var oPrev=document.querySelector('.add .add_prev');	
+		var oNext=document.querySelector('.add .add_next');	
 		var oBox=document.querySelector('.add .ul_box');	
 		var aLi=document.querySelectorAll('.add .ul_box li');
+		var oCur=document.querySelector('.add .ul_box .cur');
+		var oImg=oCur.getElementsByTagName('img')[0];
 		var result=[];
 		for(var i=0;i<aLi.length;i++){
 			result.push(aLi[i].className);
 		}
 		oPrev.onclick=function(){
+			oCur.onmouseover=null;
+			oCur.onmouseout=null;
 			result.push(result.shift());
 			for(var i=0;i<aLi.length;i++){
 				aLi[i].className=result[i];	
-			}	
+			}
+			oCur=document.querySelector('.add .ul_box .cur');
+			oImg=oCur.getElementsByTagName('img')[0];	
+			oCur.onmouseover=function(){
+				setCSS3(oImg,'transition','1s all ease');
+				setCSS3(oImg,'transform','scale(1.2) rotate(5deg)');
+			};
+			oCur.onmouseout=function(){
+				setCSS3(oImg,'transition','1s all ease');
+				setCSS3(oImg,'transform','scale(1) rotate(0deg)');
+			};
 		};
 		oNext.onclick=function(){
+			oCur.onmouseover=null;
+			oCur.onmouseout=null;
 			result.unshift(result.pop());
 			for(var i=0;i<aLi.length;i++){
 				aLi[i].className=result[i];	
 			}	
+			oCur=document.querySelector('.add .ul_box .cur');
+			oImg=oCur.getElementsByTagName('img')[0];
+			oCur.onmouseover=function(){
+				setCSS3(oImg,'transition','1s all ease');
+				setCSS3(oImg,'transform','scale(1.2) rotate(5deg)');
+			};
+			oCur.onmouseout=function(){
+				setCSS3(oImg,'transition','1s all ease');
+				setCSS3(oImg,'transform','scale(1) rotate(0deg)');
+			};
+		};
+		oCur.onmouseover=function(){
+			setCSS3(oImg,'transition','1s all ease');
+			setCSS3(oImg,'transform','scale(1.2) rotate(5deg)');
+		};
+		oCur.onmouseout=function(){
+			setCSS3(oImg,'transition','1s all ease');
+			setCSS3(oImg,'transform','scale(1) rotate(0deg)');
 		};
 	})();
-	//
+	//个人资料
     var bClick=0;
     ;(function(){
         var oUl=document.getElementById('ul1');
