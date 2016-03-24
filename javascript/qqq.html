@@ -19,12 +19,13 @@ document.addEventListener('DOMContentLoaded',function(){
 	oDiv.addEventListener('touchstart',function(ev){
 		function getDis(ev){
 			var x1=ev.targetTouches[0].pageX;
-			var x1=ev.targetTouches[0].pageY;
+			var y1=ev.targetTouches[0].pageY;
 			var x2=ev.targetTouches[1].pageX;
 			var y2=ev.targetTouches[1].pageY;
 			var x=(x1+x2)/2;
 			var y=(y1+y2)/2;
 			return {x:x,y:y}
+			//return {x:x1,y:y1}
 		}
 		var disX=getDis(ev).x-x;
 		var disY=getDis(ev).y-y;
