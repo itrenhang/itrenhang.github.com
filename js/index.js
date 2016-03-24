@@ -2,7 +2,7 @@ window.onload=function(){
 	//背景
 	;(function(){
 		var oBg=document.getElementById('bg');
-		var aImg=oBg.children;
+		var aImg=oBg.getElementsByTagName('img');
 		if(document.documentElement.clientWidth>1349){
 			oBg.style.width=document.documentElement.clientWidth+'px';
 			oBg.style.height=document.documentElement.clientHeight+20+'px';
@@ -26,57 +26,60 @@ window.onload=function(){
 	//con1
 	;(function(){
 		var oDiv=document.getElementById('con1');
-		var timer=null;
-		clearTimeout(timer);
-		timer=setTimeout(function(){
-			startMoveH(oDiv,100)
-		},500);
-		var oP1=oDiv.getElementsByTagName('p')[1];
-		var oP2=oDiv.getElementsByTagName('p')[2];
-		var str1='电话：15810062339';
-		var str2='邮箱：itrenhang@163.com';
-		for(var i=0;i<str1.length;i++){
-			oP1.innerHTML+='<span>'+str1.charAt(i)+'</span>';	
+		function introduce(){
+			var timer=null;
+			clearTimeout(timer);
+			timer=setTimeout(function(){
+				startMoveH(oDiv,100)
+			},500);
+			var oP1=oDiv.getElementsByTagName('p')[1];
+			var oP2=oDiv.getElementsByTagName('p')[2];
+			var str1='电话：15810062339';
+			var str2='邮箱：itrenhang@163.com';
+			for(var i=0;i<str1.length;i++){
+				oP1.innerHTML+='<span>'+str1.charAt(i)+'</span>';	
+			}
+			for(var i=0;i<str2.length;i++){
+				oP2.innerHTML+='<span>'+str2.charAt(i)+'</span>';	
+			}
+			var aS1=oP1.getElementsByTagName('span');
+			for(var i=0;i<aS1.length;i++){
+				;(function(i){
+					oP1.timer=setTimeout(function(){
+						move(aS1[i],{opacity:1});
+					},1000+100*i);
+				})(i)
+			}
+			var aS2=oP2.getElementsByTagName('span');
+			for(var i=0;i<aS2.length;i++){
+				;(function(i){
+					oP2.timer=setTimeout(function(){
+						move(aS2[i],{opacity:1});
+					},2500+100*i);
+				})(i)
+			}
+			function setStyle(obj,name,value){
+				obj.style['Webkit'+name.charAt(0).toUpperCase()+name.substring(1)]=value;
+				obj.style['Moz'+name.charAt(0).toUpperCase()+name.substring(1)]=value;
+				obj.style['ms'+name.charAt(0).toUpperCase()+name.substring(1)]=value;
+				obj.style['O'+name.charAt(0).toUpperCase()+name.substring(1)]=value;
+				obj.style[name]=value;
+			}
+			function fnEnd(){
+				oDiv.style.display='none';	
+				oDiv.removeEventListener('transitionend',fnEnd,false);
+			}
+			var oA=oDiv.getElementsByTagName('a')[0];
+			oA.onclick=function(){
+				setStyle(oDiv,'transition','.5s all ease');
+				oDiv.style.opacity=0;
+				setStyle(oDiv,'transform','scale(2)');
+				clearTimeout(oP1.timer);
+				clearTimeout(oP2.timer);
+				oDiv.addEventListener('transitionend',fnEnd,false);
+			};
 		}
-		for(var i=0;i<str2.length;i++){
-			oP2.innerHTML+='<span>'+str2.charAt(i)+'</span>';	
-		}
-		var aS1=oP1.getElementsByTagName('span');
-		for(var i=0;i<aS1.length;i++){
-			;(function(i){
-				oP1.timer=setTimeout(function(){
-					move(aS1[i],{opacity:1});
-				},1000+100*i);
-			})(i)
-		}
-		var aS2=oP2.getElementsByTagName('span');
-		for(var i=0;i<aS2.length;i++){
-			;(function(i){
-				oP2.timer=setTimeout(function(){
-					move(aS2[i],{opacity:1});
-				},2500+100*i);
-			})(i)
-		}
-		function setStyle(obj,name,value){
-			obj.style['Webkit'+name.charAt(0).toUpperCase()+name.substring(1)]=value;
-			obj.style['Moz'+name.charAt(0).toUpperCase()+name.substring(1)]=value;
-			obj.style['ms'+name.charAt(0).toUpperCase()+name.substring(1)]=value;
-			obj.style['O'+name.charAt(0).toUpperCase()+name.substring(1)]=value;
-			obj.style[name]=value;
-		}
-		function fnEnd(){
-			oDiv.style.display='none';	
-			oDiv.removeEventListener('transitionend',fnEnd,false);
-		}
-		var oA=oDiv.getElementsByTagName('a')[0];
-		oA.onclick=function(){
-			setStyle(oDiv,'transition','.5s all ease');
-			oDiv.style.opacity=0;
-			setStyle(oDiv,'transform','scale(2)');
-			clearTimeout(oP1.timer);
-			clearTimeout(oP2.timer);
-			oDiv.addEventListener('transitionend',fnEnd,false);
-		};
+		introduce()
 	})();
 	//-webkit-函数
 	function setCSS3(obj,name,value){
