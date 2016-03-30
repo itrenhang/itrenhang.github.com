@@ -11,6 +11,6 @@ b,strong{ font-weight:normal;}
 a img{ border:none;}
 ol,ul,dl{list-style:none;}
 .p10{ padding:0 10px;}
-a img{display:block; border:none;}
+
 .clearfix:after{display:block;content:"";clear:both;}
 .clearfix{zoom:1;}

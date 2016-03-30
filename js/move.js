@@ -1,1 +1,91 @@
-function getStyle(a,b){return(a.currentStyle||getComputedStyle(a,!1))[b]}function move(a,b,c){c=c||{},c.type=c.type||"ease-out",c.time=c.time||800;var d={},e={};for(var f in b){if(e[f]=parseFloat(getStyle(a,f)),isNaN(e[f]))switch(f){case"width":e[f]=a.offsetWidth;break;case"height":e[f]=a.offsetHeight;break;case"top":e[f]=a.offsetTop;break;case"left":e[f]=a.offsetLeft;break;case"opacity":e[f]=1;break;case"borderWidth":e[f]=0}d[f]=b[f]-e[f];var g=0,h=Math.floor(c.time/30);clearInterval(a.timer),a.timer=setInterval(function(){g++;for(var f in b){switch(c.type){case"linear":var i=e[f]+d[f]*g/h;break;case"ease-in":var j=g/h,i=e[f]+d[f]*Math.pow(j,3);break;case"ease-out":var j=1-g/h,i=e[f]+d[f]*(1-Math.pow(j,3))}"opacity"==f?(a.style.opacity=i,a.style.filter="alpha(opacity:"+100*i+")"):a.style[f]=i+"px"}h==g&&(clearInterval(a.timer),c.end&&c.end())},30)}}
+function getStyle(obj,sName){
+	return (obj.currentStyle||getComputedStyle(obj,false))[sName];
+}
+function move(obj,json,options){
+	options=options||{};
+	options.type=options.type||'ease-out';
+	options.time=options.time||800;
+	var dis={};
+	var start={};
+	for(var name in json){
+		start[name]=parseFloat(getStyle(obj,name));
+		if(isNaN(start[name])){
+			switch(name){
+				case 'width':
+					start[name]=obj.offsetWidth;
+				break
+				case 'height':
+					start[name]=obj.offsetHeight;
+				break
+				case 'top':
+					start[name]=obj.offsetTop;
+				break
+				case 'left':
+					start[name]=obj.offsetLeft;
+				break
+				case 'opacity':
+					start[name]=1;
+				break
+				case 'borderWidth':
+					start[name]=0;
+				break
+			}
+		}
+		dis[name]=json[name]-start[name];
+		var n=0;
+	var count=Math.floor(options.time/30);
+	clearInterval(obj.timer);
+	obj.timer=setInterval(function(){
+		n++;
+		for(var name in json){
+			switch(options.type){
+				case 'linear': 
+					var cur=start[name]+dis[name]*n/count;
+				break;
+				case 'ease-in': 
+					var a=n/count;
+					var cur=start[name]+dis[name]*(Math.pow(a,3));
+				break;
+				case 'ease-out': 
+					var a=1-n/count;
+					var cur=start[name]+dis[name]*(1-Math.pow(a,3));
+				break;
+			} 
+			if(name=='opacity'){
+				obj.style.opacity=cur;
+				obj.style.filter='alpha(opacity:'+cur*100+')';
+			}else{
+				obj.style[name]=cur+'px';
+			}
+		}
+		if(count==n){
+			clearInterval(obj.timer);
+			options.end&&options.end();
+		}
+	},30);
+	
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+}
