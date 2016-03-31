@@ -144,7 +144,7 @@ cursor:pointer;}
 
 
 /*back*/
-.back{width:48px; height:75px; position:fixed; bottom:20px; right:40px; background:url(../img/back.png) no-repeat 0 0; display:none; }
+.back{width:48px; height:75px; position:fixed; bottom:20px; right:40px; background:url(../img/back.png) no-repeat 0 0; display:none; z-index:50; }
 .back:hover{background:url(../img/back.png) no-repeat -48px 0;}
 
 
