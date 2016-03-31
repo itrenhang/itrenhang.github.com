@@ -28,11 +28,17 @@ window.onload=function(){
 		aLi[i].style.left=parseInt(rnd(0,document.documentElement.clientWidth-aLi[0].offsetWidth))+'px';
 	}
 	for(var i=0;i<aLi.length;i++){
-		drag(aLi[i]);
+		drag(aLi[i],i);
 	}
-	function drag(obj){
+	function drag(obj,i){
+		obj.lastX=0;
+		obj.lastY=0;
+		obj.iSpeedX=0;
+		obj.iSpeedY=0;
+		obj.left=0;
+		obj.top=0;
 		obj.onmousedown=function(ev){
-			clearInterval(timer);
+			clearInterval(obj.timer);
 			var oEvent=ev||event;
 			var disX=oEvent.clientX-obj.offsetLeft;
 			var disY=oEvent.clientY-obj.offsetTop;
@@ -40,55 +46,56 @@ window.onload=function(){
 				var oEvent=ev||event;
 				obj.style.left=oEvent.clientX-disX+'px';
 				obj.style.top=oEvent.clientY-disY+'px';
-				iSpeedX=oEvent.clientX-lastX;
-				iSpeedY=oEvent.clientY-lastY;;
-				lastX=oEvent.clientX;
-				lastY=oEvent.clientY;
+				obj.iSpeedX=oEvent.clientX-obj.lastX;
+				obj.iSpeedY=oEvent.clientY-obj.lastY;;
+				obj.lastX=oEvent.clientX;
+				obj.lastY=oEvent.clientY;
 			};
 			document.onmouseup=function(){
 				document.onmousemove=null;
 				document.onmouseup=null;
 				obj.releaseCapture&&obj.releaseCapture();	
-				move(obj)
+				move(obj);
 			};
 			obj.setCapture&&obj.setCapture();
 			return false;
 		};
-	}
-	function move(obj){
-		clearInterval(timer);
-		timer=setInterval(function(){
-			iSpeedY+=3;
-			top=obj.offsetTop+iSpeedY;
-			left=obj.offsetLeft+iSpeedX;
-			if(top<0){
-				top=0;
-				iSpeedY*=-0.8;	
-				iSpeedX*=0.8;	
-			}
-			if(top>document.documentElement.clientHeight-obj.offsetHeight){
-				top=document.documentElement.clientHeight-obj.offsetHeight;
-				iSpeedY*=-0.8;	
-				iSpeedX*=0.8;	
-			}
-			if(left<0){
-				left=0;
-				iSpeedX*=-0.8;	
-				iSpeedY*=0.8;	
-			}
-			if(left>document.documentElement.clientWidth-obj.offsetWidth){
-				left=document.documentElement.clientWidth-obj.offsetWidth;
-				iSpeedX*=-0.8;	
-				iSpeedY*=0.8;	
-			}
-			obj.style.left=left+'px';
-			obj.style.top=top+'px';
-			if(Math.abs(iSpeedX)<1)iSpeedX=0;
-			if(Math.abs(iSpeedY)<1)iSpeedY=0;
-			if(iSpeedX==0&&iSpeedY==0&&t==document.documentElement.clientHeight-obj.offsetHeight){
-				clearInterval(timer);	
-			}
-		},30)
+	
+		function move(obj){
+			clearInterval(obj.timer);
+			obj.timer=setInterval(function(){
+				obj.iSpeedY+=3;
+				obj.top=obj.offsetTop+obj.iSpeedY;
+				obj.left=obj.offsetLeft+obj.iSpeedX;
+				if(obj.top<0){
+					obj.top=0;
+					obj.iSpeedY*=-0.8;	
+					obj.iSpeedX*=0.8;	
+				}
+				if(obj.top>document.documentElement.clientHeight-obj.offsetHeight){
+					obj.top=document.documentElement.clientHeight-obj.offsetHeight;
+					obj.iSpeedY*=-0.8;	
+					obj.iSpeedX*=0.8;	
+				}
+				if(obj.left<0){
+					obj.left=0;
+					obj.iSpeedX*=-0.8;	
+					obj.iSpeedY*=0.8;	
+				}
+				if(obj.left>document.documentElement.clientWidth-obj.offsetWidth){
+					obj.left=document.documentElement.clientWidth-obj.offsetWidth;
+					obj.iSpeedX*=-0.8;	
+					obj.iSpeedY*=0.8;	
+				}
+				obj.style.left=obj.left+'px';
+				obj.style.top=obj.top+'px';
+				if(Math.abs(obj.iSpeedX)<1)obj.iSpeedX=0;
+				if(Math.abs(obj.iSpeedY)<1)obj.iSpeedY=0;
+				if(obj.iSpeedX==0&&obj.iSpeedY==0&&obj.top==document.documentElement.clientHeight-obj.offsetHeight){
+					clearInterval(obj.timer);	
+				}
+			},30)
+		}
 	}
 };
 </script>

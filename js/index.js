@@ -34,7 +34,7 @@ window.onload=function(){
 			},500);
 			var oP1=oDiv.getElementsByTagName('p')[1];
 			var oP2=oDiv.getElementsByTagName('p')[2];
-			var str1='电话：15810062339';
+			var str1='电话：158-1006-2339';
 			var str2='邮箱：itrenhang@163.com';
 			for(var i=0;i<str1.length;i++){
 				oP1.innerHTML+='<span>'+str1.charAt(i)+'</span>';	
@@ -166,6 +166,7 @@ window.onload=function(){
     ;(function(){
         var oTel=document.getElementById('tel');
         var oWx=document.getElementById('weixin');
+        var oImg=oWx.getElementsByTagName('img')[1];
         function change(id){
             var obj=document.getElementById(id);
             var oDiv1=obj.children[1];
@@ -180,7 +181,14 @@ window.onload=function(){
             };
         }
         change('tel');
-        change('weixin');
+        //change('weixin');
+		var num=0;
+		oWx.onmouseover=function(){
+			move(oImg,{'width':200,'height':200,'opacity':1})
+		};
+		oWx.onmouseout=function(){
+			move(oImg,{width:0,'height':0,'opacity':0})
+		};
     })();
 
     
@@ -402,11 +410,11 @@ window.onload=function(){
 		}
 		var aLi = oUl.children;
 		var hrefArr=['javascript/point.html','javascript/window.html','javascript/tab.html','javascript/play.html','javascript/ball.html','javascript/drag.html']
-		var hrefArr2=['html5/clock.html','html5/blow/blow.html','html5/jsimg/demo.html','html5/3dtupian/demo.html','html5/bw.html','html5/daoying/demo.html']
+		var hrefArr2=['html5/clock.html','html5/blow/blow.html','html5/jsimg/demo.html','html5/3dtupian/demo.html','html5/bw.html','html5/geolocation.html']
 		var imgArr1=['shoufengqin','fenbu','tab','youxi','ball','gundong'];
-		var imgArr2=['shizhong','blow','img','tupianhuan','wuziqi','zoulang'];
+		var imgArr2=['shizhong','blow','img','tupianhuan','wuziqi','ditu'];
 		var innerArr=['手风琴','分布运动','无缝滚动选显卡','游戏','扔星球','图片比例缩放'];
-		var innerArr2=['时钟','爆炸等效果','JS图片展示','3D图片环','五子棋','3D倒影走廊'];
+		var innerArr2=['时钟','爆炸等效果','JS图片展示','3D图片环','五子棋','百度地图'];
 		// 布局转换
 		var aPos = [];
 		for(var i=0;i<aLi.length;i++){
