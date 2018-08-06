@@ -1,0 +1,15 @@
+<!DOCTYPE html><html><head><meta charset=utf-8><meta id=deviceViewport name=viewport content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,minimal-ui"><meta name=screen-orientation content=portrait><meta name=apple-mobile-web-app-capable content=yes><meta name=format-detection content="telephone=no"><meta name=full-screen content=yes><meta name=x5-fullscreen content=true><title>便利屋</title><link href=//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css rel=stylesheet><style>html {
+      font-size: 20px;
+    }</style><script>var ua = navigator.userAgent;
+    var platform = navigator.platform;
+    var ios = /iPhone|iPad|iPod/.test(platform) && ua.indexOf("AppleWebKit") > -1;
+    if (ios) {
+      var deviceViewport = document.getElementById('deviceViewport');
+      deviceViewport.setAttribute('content', 'width=viewwidth, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, minimal-ui');
+    }
+    window.onload = function () {
+      document.documentElement.style.fontSize = document.documentElement.clientWidth / 320 * 20 + 'px';
+      window.onresize = function () {
+        document.documentElement.style.fontSize = document.documentElement.clientWidth / 320 * 20 + 'px';
+      };
+    };</script><link href=/vueAdmin-template/static/css/app.75d13a47dd37ca558fa17a857e6933cd.css rel=stylesheet></head><body><div id=app></div><script type=text/javascript src=/vueAdmin-template/static/js/manifest.9d0c7300aaed323580b8.js></script><script type=text/javascript src=/vueAdmin-template/static/js/vendor.754ebb996a31a596b861.js></script><script type=text/javascript src=/vueAdmin-template/static/js/app.b119669edb90cbf0a117.js></script></body></html>
